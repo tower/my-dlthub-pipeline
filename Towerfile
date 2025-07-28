@@ -1,0 +1,3 @@
+[app]
+name = "my-dlt-pipeline"
+script = "./pipeline.py"
