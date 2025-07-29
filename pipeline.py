@@ -10,8 +10,22 @@ from dlt.sources.helpers.rest_client import paginate
 from dlt.sources.helpers.rest_client.auth import BearerTokenAuth
 from dlt.sources.helpers.rest_client.paginators import HeaderLinkPaginator
 
+# These are columns that dltHub can't infer types of, imperically discovered by
+# running this pipeline over and over again.
+predefined_columns = {
+    'milestone': {'data_type': 'text'},
+    'assignee': {'data_type': 'text'},
+    'type': {'data_type': 'text'},
+    'active_lock_reason': {'data_type': 'text'},
+    'pull_request__merged_at': {'data_type': 'text'},
+    'closed_at': {'data_type': 'text'},
+    'performed_via_github_app': {'data_type': 'text'},
+    'milestone__due_on': {'data_type': 'text'},
+    'milestone__closed_at': {'data_type': 'text'},
+    'closed_by': {'data_type': 'text'}
+}
 
-@dlt.resource(write_disposition="replace", columns={'assignee': {'data_type': 'text'}})
+@dlt.resource(write_disposition="replace", columns=predefined_columns)
 def github_api_resource(access_token: Optional[str] = dlt.secrets.value):
     url = "https://api.github.com/repos/dlt-hub/dlt/issues"
 
