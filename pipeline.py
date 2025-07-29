@@ -45,7 +45,9 @@ def github_api_source(access_token: Optional[str] = dlt.secrets.value):
 def run_source() -> None:
     # configure the pipeline with your destination details
     pipeline = dlt.pipeline(
-        pipeline_name="github_api_pipeline", destination='duckdb', dataset_name="github_api_data"
+        pipeline_name="github_api_pipeline",
+        destination=dlt.destinations.duckdb("/tmp/data.db"),
+        dataset_name="github_api_data"
     )
 
     # print credentials by running the resource
